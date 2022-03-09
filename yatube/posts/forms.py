@@ -27,4 +27,3 @@ class CommentForm(forms.ModelForm):
             'text': forms.Textarea(attrs={'class': 'form-control'}),
             'author': forms.Textarea(attrs={'class': 'form-control'}),
         }
-

@@ -99,7 +99,7 @@ def post_edit(request, pk):
         request.POST or None,
         files=request.FILES or None,
         instance=post
-        )
+    )
     if post.author != request.user:
         return redirect(f'/posts/{pk}/')
 
@@ -132,7 +132,7 @@ def add_comment(request, pk):
 @login_required
 def follow_index(request):
     template = 'posts/follow.html'
-    posts = Post.objects.filter(author__following__user=request.user) # здесь фильтр
+    posts = Post.objects.filter(author__following__user=request.user)
     paginator = Paginator(posts, NUMBER_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
