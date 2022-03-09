@@ -123,15 +123,3 @@ class PostsPagesTests(TestCase):
                     response_post = response_by_page[
                         NUMBER_OF_POSTS_FOR_TEST - NUMBER_OF_POSTS]
                     self.assertEqual(response_post, expected)
-
-    def test_index_cache(self):
-        response_1 = self.authorized_client.get(reverse(self.index_url[0]),
-                                                args=self.index_url[2]).content
-        Post.objects.get(pk=2).delete()
-        response_2 = self.authorized_client.get(reverse(self.index_url[0]),
-                                                args=self.index_url[2]).content
-        self.assertEqual(response_1, response_2)
-        cache.clear()
-        response_3 = self.authorized_client.get(reverse(self.index_url[0]),
-                                                args=self.index_url[2]).content
-        self.assertNotEqual(response_1, response_3)
