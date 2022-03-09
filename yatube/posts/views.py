@@ -8,7 +8,7 @@ from django.views.decorators.cache import cache_page
 NUMBER_OF_POSTS = 10
 
 
-@cache_page(20)
+@cache_page(120)
 def index(request):
     template = 'posts/index.html'
     posts = (
