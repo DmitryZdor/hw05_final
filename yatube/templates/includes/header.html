@@ -1,0 +1,60 @@
+
+
+    <header>
+      <nav class="navbar navbar-light" style="background-color: lightskyblue">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'posts:index' %}">
+            {% load static %}
+            <img src="{% static 'img/logo.png' %}" width="50" height="50" class="d-inline-block align-top" alt="">
+            <span style="color:red">Ya</span>tube</a>
+          </a>
+       <ul class="nav nav-pills">
+       {% with request.resolver_match.view_name as view_name %}
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'about:author' %}active{% endif %}"
+             href="{% url 'about:author' %}">Об авторе</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'about:tech' %}active{% endif %}"
+             href="{% url 'about:tech' %}">Технологии</a>
+        </li>
+
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'posts:post_create' %}">Новая запись</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link-light" href="<!--  -->">Изменить пароль</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link-light {% if view_name  == 'users:logout' %}active{% endif %}"
+             href="{% url 'users:logout' %}" >Выйти</a>
+        </li>
+        <li>
+            <style>
+                .block{
+                display: inline-block; /* Строчно-блочный элемент */
+                background-color: white;
+                color: blue; /* Белый цвет текста */
+                padding: 0.5rem 0.7rem; /* Поля вокруг текста */
+                text-decoration: none; /* Убираем подчёркивание */
+                border-radius: 5px; /* Скругляем уголки */
+              }
+             </style>
+           <a class="block" >Пользователь: {{ user.username }}</a>
+        <li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link link-light {% if view_name  == 'users:login' %}active{% endif %}"
+             href="{% url 'users:login' %}">Войти</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link-light {% if view_name  == 'users:signup' %}active{% endif %} "
+             href="{% url 'users:signup' %}">Регистрация</a>
+        </li>
+        {% endif %}
+       </ul>
+ {% endwith %}
+        </div>
+      </nav>
+    </header>

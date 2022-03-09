@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %}  {% endblock %}
+{% block content %}
+{% include 'includes/switcher.html' %}
+  <body>
+
+      <h1>Любимые авторы</h1>
+    <main>
+        <article>
+          {% for post in page_obj %}
+            <ul>
+              <li>
+                Автор: {{ post.author.get_full_name }}
+                 <a href="{% url 'posts:profile' post.author %}">все посты пользователя</a>
+              </li>
+              <li>
+                Дата публикации: {{ post.pub_date|date:"d E Y" }}
+              </li>
+            </ul>
+             {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
+                    <img class="card-img my-2" src="{{ im.url }}">
+             {% endthumbnail %}
+            <p>{{ post.text }}</p>
+            <p><a href="{% url 'posts:post_detail' post.pk %}">подробная информация </a></p>
+             <style>
+               .btn {
+                display: inline-block; /* Строчно-блочный элемент */
+                background-color: lightskyblue;
+                color: #fff; /* Белый цвет текста */
+                padding: 0.5rem 0.7rem; /* Поля вокруг текста */
+                text-decoration: none; /* Убираем подчёркивание */
+                border-radius: 5px; /* Скругляем уголки */
+              }
+             </style>
+             {% if post.group %}
+             <p><a href="{% url 'posts:group_list' post.group.slug %}" class="btn"
+             >все записи группы</a>
+             {% endif %}
+             {% if not forloop.last %}<hr>{% endif %}
+          {% endfor %}
+        </article>
+    </main>
+
+  </body>
+{% endblock content %}
