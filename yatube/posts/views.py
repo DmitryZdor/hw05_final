@@ -8,12 +8,10 @@ from django.views.decorators.cache import cache_page
 NUMBER_OF_POSTS = 10
 
 
-@cache_page(1)
+@cache_page(20)
 def index(request):
     template = 'posts/index.html'
-    posts = (
-        Post.objects.all()
-    )
+    posts = (Post.objects.all())
     paginator = Paginator(posts, NUMBER_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -24,9 +22,11 @@ def index(request):
 
 
 def group_posts(request, slug):
-    group = get_object_or_404(Group, slug=slug)
+    group = get_object_or_404(Group.objects.prefetch_related('group'),
+                              slug=slug
+                              )
     template = 'posts/group_list.html'
-    posts = Post.objects.filter(group=group)
+    posts = Post.objects.select_related('author').filter(group=group)
     paginator = Paginator(posts, NUMBER_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

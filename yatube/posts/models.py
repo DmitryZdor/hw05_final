@@ -32,12 +32,13 @@ class Post(models.Model):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
+        related_name='group',
         verbose_name='ГРУППА',
         help_text='Выберите группу'
     )
 
     image = models.ImageField(
-        'Картинка',
+        verbose_name='Картинка',
         upload_to='posts/',
         blank=True
     )
