@@ -26,7 +26,7 @@ def group_posts(request, slug):
                               slug=slug
                               )
     template = 'posts/group_list.html'
-    posts = Post.objects.select_related('author').filter(group=group)
+    posts = Post.objects.select_related('group').filter(group=group)
     paginator = Paginator(posts, NUMBER_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
