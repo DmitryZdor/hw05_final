@@ -22,12 +22,12 @@ def index(request):
 
 
 def group_posts(request, slug):
-    group = get_object_or_404(Group.objects.prefetch_related('group'),
+    group = get_object_or_404(Group.objects.prefetch_related('posts'),
                               slug=slug
                               )
     template = 'posts/group_list.html'
-    posts = Post.objects.select_related('group').filter(group=group)
-    paginator = Paginator(posts, NUMBER_OF_POSTS)
+    posts_all = group.posts.all()
+    paginator = Paginator(posts_all, NUMBER_OF_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
