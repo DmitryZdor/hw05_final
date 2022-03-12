@@ -50,7 +50,7 @@ def profile(request, username):
         following = True
     context = {
         'author': author,
-        'user': user,
+        #'user': user,
         'posts': posts,
         'page_obj': page_obj,
         'following': following
