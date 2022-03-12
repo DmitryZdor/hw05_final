@@ -4,6 +4,7 @@ import tempfile
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase, override_settings
+from django.core.cache import cache
 from django.urls import reverse
 from ..forms import PostForm
 from ..models import Post, Group, User
@@ -57,6 +58,7 @@ class MediaCreateFormTests(TestCase):
         shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
 
     def setUp(self):
+        cache.clear()
         self.guest_client = Client()
 
     def test_pages_has_image(self):
