@@ -35,7 +35,7 @@ git@github.com:DmitryZdor/api_final_yatube.git
 ```
 2. Перейти в корневую папку проекта
 ```
-cd yatube_api/
+cd yatube/
 ```
 
 
